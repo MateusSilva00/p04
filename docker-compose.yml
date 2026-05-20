@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: broker_promocoes
+    ports:
+      - "5672:5672" # Porta padrão do protocolo AMQP
+      - "15672:15672" # Porta da interface web de gerenciamento (Dashboard)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq # Garante que as mensagens/filas não sumam se o container reiniciar
+
+volumes:
+  rabbitmq_data:

@@ -43,7 +43,7 @@ def render():
             table.add_column("Categoria", style="cyan", justify="center")
             table.add_column("Preço", style="bold green", justify="right")
 
-            for pid, p in known_promotions.items():
+            for _, p in known_promotions.items():
                 table.add_row(
                     p.get("nome_produto", "?"),
                     p.get("categoria", "?"),
@@ -111,7 +111,8 @@ def init_consumers(public_key_promotion, public_key_ranking):
             )
         else:
             event_log.append(
-                f"  [yellow]⚠[/yellow] Hot Deal para promoção desconhecida: [dim]{id_promotion[:10]}...[/dim]"
+                "  [yellow]⚠[/yellow] Hot Deal para promoção desconhecida: "
+                f"[dim]{id_promotion[:10]}...[/dim]"
             )
 
         render()

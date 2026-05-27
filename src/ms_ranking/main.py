@@ -45,7 +45,7 @@ def render():
         table.add_column("Score", justify="center", width=8)
         table.add_column("Status", justify="center")
 
-        for pid, info in local_score.items():
+        for _, info in local_score.items():
             nome = info["nome"]
             score = info["score"]
 
@@ -92,7 +92,8 @@ def main():
     if not os.path.exists(gateway_pub_path):
         console.print(
             Panel(
-                f"[red]Chave pública do Gateway não encontrada em:[/red]\n[dim]{gateway_pub_path}[/dim]",
+                "[red]Chave pública do Gateway não encontrada em:[/red]\n"
+                f"[dim]{gateway_pub_path}[/dim]",
                 title="[red]❌ Erro de Configuração[/red]",
                 style="red",
             )
@@ -105,9 +106,7 @@ def main():
     try:
         rabbitmq = RabbitMQClient()
     except Exception as e:
-        console.print(
-            Panel(f"[red]Erro ao conectar no RabbitMQ:[/red] {e}", style="red")
-        )
+        console.print(Panel(f"[red]Erro ao conectar no RabbitMQ:[/red] {e}", style="red"))
         return
 
     def process_vote(envelope: EventEnvelope):

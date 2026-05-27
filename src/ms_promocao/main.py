@@ -69,7 +69,8 @@ def main():
     if not os.path.exists(gateway_pub_path):
         console.print(
             Panel(
-                f"[red]Chave pública do Gateway não encontrada em:[/red]\n[dim]{gateway_pub_path}[/dim]\n\n"
+                "[red]Chave pública do Gateway não encontrada em:[/red]\n"
+                f"[dim]{gateway_pub_path}[/dim]\n\n"
                 "[yellow]Rode o MS Gateway pelo menos uma vez para gerar suas chaves.[/yellow]",
                 title="[red]❌ Erro de Configuração[/red]",
                 style="red",
@@ -83,9 +84,7 @@ def main():
     try:
         rabbitmq = RabbitMQClient()
     except Exception as e:
-        console.print(
-            Panel(f"[red]Erro ao conectar no RabbitMQ:[/red] {e}", style="red")
-        )
+        console.print(Panel(f"[red]Erro ao conectar no RabbitMQ:[/red] {e}", style="red"))
         return
 
     def processar_promocao_recebida(envelope: EventEnvelope):

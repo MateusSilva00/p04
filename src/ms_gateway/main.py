@@ -36,9 +36,7 @@ def print_menu():
     menu.append("  Listar promoções e votar\n", style="white")
     menu.append("  [0]", style="bold red")
     menu.append("  Sair", style="white")
-    console.print(
-        Panel(menu, title="[bold]Menu[/bold]", style="dim white", padding=(0, 2))
-    )
+    console.print(Panel(menu, title="[bold]Menu[/bold]", style="dim white", padding=(0, 2)))
 
 
 def render_menu():
@@ -50,9 +48,7 @@ def render_menu():
 def print_promotions_table():
     if not approved_promotions:
         console.print(
-            Panel(
-                "[yellow]Nenhuma promoção aprovada no momento.[/yellow]", style="yellow"
-            )
+            Panel("[yellow]Nenhuma promoção aprovada no momento.[/yellow]", style="yellow")
         )
         return False
 
@@ -87,9 +83,7 @@ def init_background_consumer(public_key_promocao):
     try:
         rabbitmq_consumer = RabbitMQClient()
     except Exception as e:
-        console.print(
-            f"[red][Aviso] Falha ao iniciar consumidor de background: {e}[/red]"
-        )
+        console.print(f"[red][Aviso] Falha ao iniciar consumidor de background: {e}[/red]")
         return
 
     def process_published_promotions(envelope: EventEnvelope):
@@ -120,7 +114,8 @@ def main():
     if not os.path.exists(promocao_pub_path):
         console.print(
             Panel(
-                f"[red]Chave pública do MS Promoção não encontrada em:[/red]\n[dim]{promocao_pub_path}[/dim]\n\n"
+                "[red]Chave pública do MS Promoção não encontrada em:[/red]\n"
+                f"[dim]{promocao_pub_path}[/dim]\n\n"
                 "[yellow]Rode o MS Promoção pelo menos uma vez para gerar suas chaves.[/yellow]",
                 title="[red]❌ Erro de Configuração[/red]",
                 style="red",
@@ -192,9 +187,7 @@ def main():
             approval_event.clear()
             rabbitmq_publisher.publish_signed_event(envelope, private_key)
 
-            console.print(
-                "\n[dim]⏳ Aguardando confirmação do MS Promoção (timeout: 15s)...[/dim]"
-            )
+            console.print("\n[dim]⏳ Aguardando confirmação do MS Promoção (timeout: 15s)...[/dim]")
             aprovado = approval_event.wait(timeout=15)
 
             if aprovado and last_notification:
@@ -244,9 +237,7 @@ def main():
             if escolha.isdigit() and int(escolha) < len(lista_ids):
                 id_escolhido = lista_ids[int(escolha)]
                 nome_escolhido = approved_promotions[id_escolhido]["nome_produto"]
-                console.print(
-                    f"\n  Votando em: [bold white]{nome_escolhido}[/bold white]"
-                )
+                console.print(f"\n  Votando em: [bold white]{nome_escolhido}[/bold white]")
 
                 voto_str = Prompt.ask(
                     "  [cyan]Voto[/cyan]",
@@ -267,9 +258,7 @@ def main():
                 rabbitmq_publisher.publish_signed_event(envelope_voto, private_key)
 
                 icone = "👍" if int(voto_str) == 1 else "👎"
-                console.print(
-                    f"\n[bold green]{icone} Voto registrado e enviado![/bold green]"
-                )
+                console.print(f"\n[bold green]{icone} Voto registrado e enviado![/bold green]")
             else:
                 console.print("[red]Opção inválida.[/red]")
 

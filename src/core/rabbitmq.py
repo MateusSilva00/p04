@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Callable, List
+from collections.abc import Callable
 
 import pika
 from pika.adapters.blocking_connection import BlockingChannel
@@ -27,13 +27,9 @@ class RabbitMQClient:
         self.channel: BlockingChannel = self.connection.channel()
         self.exchange_name = exchange_name
 
-        self.channel.exchange_declare(
-            exchange=self.exchange_name, exchange_type="topic"
-        )
+        self.channel.exchange_declare(exchange=self.exchange_name, exchange_type="topic")
 
-    def publish_signed_event(
-        self, envelope: EventEnvelope, private_key_pem: bytes
-    ) -> None:
+    def publish_signed_event(self, envelope: EventEnvelope, private_key_pem: bytes) -> None:
         """
         Gera o hash, assina o evento e  o publica na exchange
         """
@@ -46,9 +42,7 @@ class RabbitMQClient:
             exchange=self.exchange_name,
             routing_key=envelope.routing_key,
             body=envelope.model_dump_json(),
-            properties=pika.BasicProperties(
-                delivery_mode=2, content_type="application/json"
-            ),
+            properties=pika.BasicProperties(delivery_mode=2, content_type="application/json"),
         )
 
         logger.info(f"Evento publicado e assinado: {envelope.routing_key}")
@@ -58,28 +52,25 @@ class RabbitMQClient:
             exchange=self.exchange_name,
             routing_key=envelope.routing_key,
             body=envelope.model_dump_json(),
-            properties=pika.BasicProperties(
-                delivery_mode=2, content_type="application/json"
-            ),
+            properties=pika.BasicProperties(delivery_mode=2, content_type="application/json"),
         )
         logger.info(f"Evento publicado SEM assinatura: {envelope.routing_key}")
 
     def setup_consumer(
         self,
         queue_name: str,
-        routing_keys: List[str],
+        routing_keys: list[str],
         public_key_pem: bytes,
         callback: Callable[[EventEnvelope], None],
     ) -> None:
         """
-        Configura uma fila, faz os bindings necessários e inicia o consumo com validação de assinatura.
+        Configura uma fila, faz os bindings necessários e inicia o consumo
+        com validação de assinatura.
         """
         self.channel.queue_declare(queue=queue_name, durable=True)
 
         for rk in routing_keys:
-            self.channel.queue_bind(
-                exchange=self.exchange_name, queue=queue_name, routing_key=rk
-            )
+            self.channel.queue_bind(exchange=self.exchange_name, queue=queue_name, routing_key=rk)
 
             def internal_callback(ch, method, properties, body):
                 try:
@@ -95,7 +86,8 @@ class RabbitMQClient:
                         callback(envelope)
                     else:
                         logger.warning(
-                            f"Messagem descartada! Assinatura inválida na routing_key: {method.routing_key}"
+                            "Messagem descartada! Assinatura inválida"
+                            f" na routing_key: {method.routing_key}"
                         )
 
                 except Exception as e:
@@ -130,9 +122,7 @@ class RabbitMQClient:
         self.channel.queue_declare(queue=queue_name, durable=True)
 
         for rk in handlers:
-            self.channel.queue_bind(
-                exchange=self.exchange_name, queue=queue_name, routing_key=rk
-            )
+            self.channel.queue_bind(exchange=self.exchange_name, queue=queue_name, routing_key=rk)
 
         def internal_callback(ch, method, properties, body):
             try:
@@ -141,9 +131,7 @@ class RabbitMQClient:
 
                 handler_entry = handlers.get(method.routing_key)
                 if handler_entry is None:
-                    logger.warning(
-                        f"Sem handler para routing_key: {method.routing_key}"
-                    )
+                    logger.warning(f"Sem handler para routing_key: {method.routing_key}")
                     return
 
                 public_key_pem, callback = handler_entry
@@ -157,7 +145,8 @@ class RabbitMQClient:
                     callback(envelope)
                 else:
                     logger.warning(
-                        f"Messagem descartada! Assinatura inválida na routing_key: {method.routing_key}"
+                        "Messagem descartada! Assinatura inválida"
+                        f" na routing_key: {method.routing_key}"
                     )
             except Exception as e:
                 logger.error(f"Erro ao processar mensagem recebida: {e}")
@@ -168,9 +157,7 @@ class RabbitMQClient:
             queue=queue_name, on_message_callback=internal_callback, auto_ack=False
         )
 
-        logger.info(
-            f"[*] Aguardando mensagens na fila '{queue_name}'. Para sair pressione CTRL+C"
-        )
+        logger.info(f"[*] Aguardando mensagens na fila '{queue_name}'. Para sair pressione CTRL+C")
         self.channel.start_consuming()
 
     def setup_unsigned_consumer(
@@ -182,9 +169,7 @@ class RabbitMQClient:
         self.channel.queue_declare(queue=queue_name, durable=True)
 
         for rk in routing_keys:
-            self.channel.queue_bind(
-                exchange=self.exchange_name, queue=queue_name, routing_key=rk
-            )
+            self.channel.queue_bind(exchange=self.exchange_name, queue=queue_name, routing_key=rk)
 
         def internal_callback(ch, method, properties, body):
             try:

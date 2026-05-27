@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -12,10 +12,10 @@ class EventEnvelope(BaseModel):
     routing_key: str = Field(
         ..., description="Chave de roteamento hierárquica (ex: promocao.recebida)"
     )
-    payload: Dict[str, Any] = Field(
+    payload: dict[str, Any] = Field(
         ..., description="Os dados reais do evento (o corpo da mensagem)"
     )
-    signature: Optional[str] = Field(
+    signature: str | None = Field(
         None, description="Assinatura digital gerada com a chave privada do produtor"
     )
 
@@ -38,5 +38,5 @@ class VotoPayload(BaseModel):
     """Payload para o registro de votos."""
 
     id_promocao: str
-    nome_produto: str   
+    nome_produto: str
     voto: int = Field(..., description="1 para positivo, -1 para negativo")

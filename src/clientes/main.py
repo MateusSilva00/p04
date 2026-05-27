@@ -68,14 +68,14 @@ def main():
     title.append("Terminal do Cliente", style="bold green")
     console.print(Panel(title, style="green", padding=(0, 2)))
 
-    nome_cliente = (
-        Prompt.ask("[bold green]Nome do cliente[/bold green]").strip().replace(" ", "_")
-    )
+    nome_cliente = Prompt.ask("[bold green]Nome do cliente[/bold green]").strip().replace(" ", "_")
     if not nome_cliente:
         nome_cliente = "Cliente"
 
     console.print(
-        "\n[dim]Sugestões:[/dim] [cyan]livro[/cyan]  [cyan]jogo[/cyan]  [cyan]eletronico[/cyan]  [cyan]destaque[/cyan]"
+        "\n[dim]Sugestões:[/dim] [cyan]livro[/cyan]  "
+        "[cyan]jogo[/cyan]  [cyan]eletronico[/cyan]  "
+        "[cyan]destaque[/cyan]"
     )
     interesses_input = Prompt.ask(
         "[bold green]Categorias de interesse[/bold green] (separadas por vírgula)"
@@ -96,9 +96,7 @@ def main():
     try:
         rabbitmq = RabbitMQClient()
     except Exception as e:
-        console.print(
-            Panel(f"[red]Erro ao conectar no RabbitMQ:[/red] {e}", style="red")
-        )
+        console.print(Panel(f"[red]Erro ao conectar no RabbitMQ:[/red] {e}", style="red"))
         return
 
     render(nome_cliente, interesses)

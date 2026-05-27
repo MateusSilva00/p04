@@ -19,6 +19,7 @@ import sys
 import time
 import uuid
 
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import (
@@ -30,7 +31,6 @@ from rich.progress import (
     TimeElapsedColumn,
 )
 from rich.table import Table
-from rich import box
 from rich.text import Text
 
 from src.core.models import EventEnvelope, PromoPayload, VotoPayload
@@ -40,25 +40,50 @@ from src.core.security import CryptoService
 # ─── Dados sintéticos para geração aleatória ────────────────────────────────
 
 PRODUTOS = [
-    "TV 4K OLED 55\"", "Notebook Gamer RTX 4070", "iPhone 15 Pro Max",
-    "Samsung Galaxy S24 Ultra", "Mouse Logitech MX Master 3S",
-    "Cadeira Gamer ThunderX3", "Fone Sony WH-1000XM5", "Kindle Paperwhite",
-    "Echo Dot 5ª Geração", "iPad Air M2", "PS5 Slim Digital",
-    "Webcam Logitech Brio 4K", "SSD NVMe 1TB Samsung 990 Pro",
-    "Monitor Ultrawide 34\" LG", "Teclado Mecânico Keychron K8 Pro",
-    "Smartwatch Apple Watch Ultra 2", "Caixa JBL Charge 5",
-    "Câmera GoPro Hero 12", "Aspirador Robô Roomba j7+",
+    'TV 4K OLED 55"',
+    "Notebook Gamer RTX 4070",
+    "iPhone 15 Pro Max",
+    "Samsung Galaxy S24 Ultra",
+    "Mouse Logitech MX Master 3S",
+    "Cadeira Gamer ThunderX3",
+    "Fone Sony WH-1000XM5",
+    "Kindle Paperwhite",
+    "Echo Dot 5ª Geração",
+    "iPad Air M2",
+    "PS5 Slim Digital",
+    "Webcam Logitech Brio 4K",
+    "SSD NVMe 1TB Samsung 990 Pro",
+    'Monitor Ultrawide 34" LG',
+    "Teclado Mecânico Keychron K8 Pro",
+    "Smartwatch Apple Watch Ultra 2",
+    "Caixa JBL Charge 5",
+    "Câmera GoPro Hero 12",
+    "Aspirador Robô Roomba j7+",
     "Air Fryer Philips Walita XXL",
 ]
 
 CATEGORIAS = [
-    "eletronicos", "informatica", "celulares", "perifericos",
-    "moveis", "audio", "games", "livros", "casa",
+    "eletronicos",
+    "informatica",
+    "celulares",
+    "perifericos",
+    "moveis",
+    "audio",
+    "games",
+    "livros",
+    "casa",
 ]
 
 LOJAS = [
-    "Amazon", "Magazine Luiza", "Casas Bahia", "Mercado Livre",
-    "Kabum", "Americanas", "Ponto", "AliExpress", "Shopee",
+    "Amazon",
+    "Magazine Luiza",
+    "Casas Bahia",
+    "Mercado Livre",
+    "Kabum",
+    "Americanas",
+    "Ponto",
+    "AliExpress",
+    "Shopee",
 ]
 
 console = Console()
@@ -80,23 +105,31 @@ def main():
         description="🔥 Teste de carga — publica promoções e votos diretamente no RabbitMQ."
     )
     parser.add_argument(
-        "-p", "--promocoes",
-        type=int, default=10,
+        "-p",
+        "--promocoes",
+        type=int,
+        default=10,
         help="Quantidade de promoções a publicar (padrão: 10)",
     )
     parser.add_argument(
-        "-v", "--votos",
-        type=int, default=30,
+        "-v",
+        "--votos",
+        type=int,
+        default=30,
         help="Quantidade total de votos aleatórios a publicar (padrão: 30)",
     )
     parser.add_argument(
-        "-d", "--delay",
-        type=float, default=0.0,
+        "-d",
+        "--delay",
+        type=float,
+        default=0.0,
         help="Delay entre publicações em segundos (padrão: 0.0 — sem delay)",
     )
     parser.add_argument(
-        "-w", "--wait",
-        type=float, default=5.0,
+        "-w",
+        "--wait",
+        type=float,
+        default=5.0,
         help="Segundos de espera entre promoções e votos para o MS Promoção validar (padrão: 5.0)",
     )
     args = parser.parse_args()
@@ -205,8 +238,7 @@ def main():
 
                 voto_payload = VotoPayload(id_promocao=id_alvo, nome_produto=nome_alvo, voto=voto)
                 envelope = EventEnvelope(
-                    routing_key="promocao.voto",
-                    payload=voto_payload.model_dump()
+                    routing_key="promocao.voto", payload=voto_payload.model_dump()
                 )
                 rabbitmq.publish_signed_event(envelope, gateway_private_key)
 

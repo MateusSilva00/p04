@@ -1,7 +1,6 @@
 import base64
 import logging
 import os
-from typing import Tuple, Union
 
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.backends import default_backend
@@ -14,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class CryptoService:
     @staticmethod
-    def generate_key_pair() -> Tuple[bytes, bytes]:
+    def generate_key_pair() -> tuple[bytes, bytes]:
         private_key = rsa.generate_private_key(
             public_exponent=65537, key_size=2048, backend=default_backend()
         )
@@ -36,7 +35,7 @@ class CryptoService:
     @staticmethod
     def sign_message(private_key_pem: bytes, payload_bytes: bytes) -> str:
         """Assina um payload utilizando a chave privada."""
-        private_key: Union[RSAPrivateKey, ...] = serialization.load_pem_private_key(  # type: ignore
+        private_key: RSAPrivateKey | ... = serialization.load_pem_private_key(  # type: ignore
             private_key_pem, password=None, backend=default_backend()
         )
 
@@ -51,14 +50,12 @@ class CryptoService:
         return base64.b64encode(signature).decode("utf-8")
 
     @staticmethod
-    def verify_signature(
-        public_key_pem: bytes, payload_byes: bytes, signature_b64: str
-    ) -> bool:
+    def verify_signature(public_key_pem: bytes, payload_byes: bytes, signature_b64: str) -> bool:
         """
         Verifica a assinatura digital utilizando a chave pública.
         """
         try:
-            public_key: Union[RSAPrivateKey, ...] = serialization.load_pem_public_key(  # type: ignore
+            public_key: RSAPrivateKey | ... = serialization.load_pem_public_key(  # type: ignore
                 data=public_key_pem, backend=default_backend()
             )
 
@@ -85,7 +82,7 @@ class CryptoService:
     @staticmethod
     def load_or_generate_keys(
         service_name: str, keys_dir_name: str = "keys"
-    ) -> Tuple[bytes, bytes]:
+    ) -> tuple[bytes, bytes]:
         """
         Gerencia a persistência das chaves no disco para simular um cofre de chaves.
         """

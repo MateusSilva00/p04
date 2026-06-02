@@ -1,4 +1,5 @@
 import asyncio
+import os
 import threading
 import uuid
 
@@ -13,6 +14,7 @@ from src.core.models import (
     VotoPayload,
 )
 from src.core.rabbitmq import RabbitMQClient
+from src.core.security import CryptoService
 from src.ms_gateway.manager import connection_manager
 
 
@@ -37,6 +39,7 @@ class GatewayService:
 
     def start(self, loop: asyncio.AbstractEventLoop) -> None:
         self._loop = loop
+        self._load_keys()
 
         self._publisher = RabbitMQClient()
         logger.info("Publisher RabbitMQ conectado")
@@ -52,7 +55,7 @@ class GatewayService:
             self._consumer.setup_multi_consumer(
                 queue_name="Fila_Gateway_API",
                 handlers={
-                    "prommocao.publicada": (
+                    "promocao.publicada": (
                         self._promocao_public_key,
                         self._on_promocao_publicada,
                     ),
@@ -64,6 +67,22 @@ class GatewayService:
             )
         except Exception:
             logger.exception("Erro fatal no consumer RabbitMQ")
+
+    def _load_keys(self) -> None:
+        self._private_key, _ = CryptoService.load_or_generate_keys("ms_gateway")
+        keys_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../keys"))
+
+        promocao_pub_path = os.path.join(keys_dir, "ms_promocao_public.pem")
+        if os.path.exists(promocao_pub_path):
+            with open(promocao_pub_path, "rb") as file:
+                self._promocao_public_key = file.read()
+            logger.info("Chave pública do MS Promoção carrega")
+
+        ranking_pub_path = os.path.join("ms_ranking.pem")
+        if os.path.exists(ranking_pub_path):
+            with open(ranking_pub_path, "rb") as file:
+                self._ranking_public_key = file.read()
+            logger.info("Chave pública do MS Ranking carregada")
 
     def _on_promocao_publicada(self, envelope: EventEnvelope) -> None:
         data = envelope.payload

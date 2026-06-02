@@ -1,6 +1,6 @@
 import json
 from enum import StrEnum
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -71,3 +71,7 @@ class PromoCreateRequest(BaseModel):
     loja: str = Field(..., description="Loja onde a promoção é válida", min_length=1)
     loja_email: str = Field(..., description="Email de contato da loja", min_length=1)
     signature: str = Field(..., description="Assinatura digital do payload")
+
+
+class VotoRequest(BaseModel):
+    voto: Literal[1, -1] = Field(..., description="1 para positivo, -1 para negativo")

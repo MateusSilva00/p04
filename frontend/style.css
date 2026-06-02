@@ -1,0 +1,466 @@
+/* ================================================================
+   FRUTIGER AERO — Design System
+   Glassmorphism, gradientes sky-blue, glossy buttons, bolhas
+   ================================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ── Variáveis ────────────────────────────────────────────────── */
+:root {
+  /* Paleta Frutiger Aero */
+  --sky-100: #e8f4fd;
+  --sky-200: #b8ddf5;
+  --sky-300: #7ec4ed;
+  --sky-400: #3da5e0;
+  --sky-500: #0a84d0;
+  --sky-600: #0870b0;
+
+  --green-400: #5cc836;
+  --green-500: #4aaf28;
+
+  --orange-400: #f5a623;
+  --orange-500: #e8961a;
+
+  --red-400: #e74c3c;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px rgba(10, 132, 208, 0.15);
+
+  --text-primary: #1a2b3c;
+  --text-secondary: #5a6a7a;
+  --text-light: #ffffff;
+
+  /* Tipografia */
+  --font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+
+  /* Espaçamento */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Bordas */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+
+  /* Gradiente céu Frutiger Aero */
+  background: linear-gradient(
+    180deg,
+    #a1d4f7 0%,
+    #d4edfc 35%,
+    #eaf6e8 70%,
+    #f0f9e8 100%
+  );
+  background-attachment: fixed;
+}
+
+/* ── Tipografia ───────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+h1 { font-size: var(--font-size-2xl); }
+h2 { font-size: var(--font-size-xl); }
+h3 { font-size: var(--font-size-lg); }
+
+/* ── Layout ───────────────────────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+/* ── Glass Card (componente principal) ────────────────────────── */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glass-shadow);
+  padding: var(--space-xl);
+
+  /* Brilho glossy no topo */
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* ── Tabs (Loja / Consumidor) ─────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.tab-button {
+  flex: 1;
+  padding: var(--space-sm) var(--space-lg);
+  border: 2px solid var(--glass-border);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: rgba(255, 255, 255, 0.3);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--sky-500);
+}
+
+.tab-button.active {
+  background: var(--glass-bg);
+  color: var(--sky-600);
+  border-color: var(--sky-300);
+  box-shadow: 0 -2px 8px rgba(10, 132, 208, 0.1);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: aero-fade-in 0.3s ease;
+}
+
+/* ── Formulário ───────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid var(--sky-200);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--sky-400);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(10, 132, 208, 0.15);
+}
+
+/* ── Botões Glossy ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-xl);
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Reflexo glossy */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--sky-400), var(--sky-600));
+  color: var(--text-light);
+  box-shadow:
+    0 2px 8px rgba(10, 132, 208, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 16px rgba(10, 132, 208, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-success {
+  background: linear-gradient(180deg, var(--green-400), var(--green-500));
+  color: var(--text-light);
+  box-shadow:
+    0 2px 8px rgba(74, 175, 40, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-danger {
+  background: linear-gradient(180deg, #f07070, var(--red-400));
+  color: var(--text-light);
+  box-shadow:
+    0 2px 8px rgba(231, 76, 60, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-sm {
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-size-sm);
+}
+
+/* ── Promoção Card ────────────────────────────────────────────── */
+.promo-card {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.promo-card:hover {
+  background: rgba(255, 255, 255, 0.65);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 132, 208, 0.1);
+}
+
+.promo-info h3 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-xs);
+}
+
+.promo-info .promo-meta {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.promo-price {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--green-500);
+}
+
+.promo-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* ── Chips (categorias de interesse) ──────────────────────────── */
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: linear-gradient(180deg, var(--sky-200), var(--sky-300));
+  color: var(--sky-600);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  color: var(--sky-600);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.chip-remove:hover {
+  opacity: 1;
+}
+
+/* ── Painel de Notificações SSE ───────────────────────────────── */
+.notification-panel {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--space-sm);
+}
+
+.notification-item {
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  animation: aero-slide-in 0.35s ease;
+}
+
+.notification-item.promo {
+  background: rgba(92, 200, 54, 0.15);
+  border-left: 3px solid var(--green-400);
+}
+
+.notification-item.hot-deal {
+  background: rgba(245, 166, 35, 0.15);
+  border-left: 3px solid var(--orange-400);
+}
+
+/* ── Badge de status ──────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-connected {
+  background: var(--green-400);
+  color: white;
+}
+
+.badge-disconnected {
+  background: var(--red-400);
+  color: white;
+}
+
+/* ── Seções ────────────────────────────────────────────────────── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--sky-200);
+}
+
+/* ── Mensagem vazia ───────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ── Animações ────────────────────────────────────────────────── */
+@keyframes aero-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes aero-slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Bolha decorativa */
+.bubble {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.6),
+    rgba(168, 216, 245, 0.15)
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bubble-1 { width: 200px; height: 200px; top: 10%; right: -40px; }
+.bubble-2 { width: 120px; height: 120px; bottom: 15%; left: -30px; }
+.bubble-3 { width: 80px;  height: 80px;  top: 50%; right: 10%; }
+
+/* ── Scrollbar Aero ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sky-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sky-400);
+}

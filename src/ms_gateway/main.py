@@ -129,7 +129,7 @@ async def sse_stream(client_id: str) -> StreamingResponse:
         try:
             while True:
                 message: SSEMessage = await queue.get()
-                yield message.to_sse_formatto_sse()
+                yield message.to_sse_format()
         except asyncio.CancelledError:
             logger.debug("SSE cancelado para cliente {}", client_id)
         finally:

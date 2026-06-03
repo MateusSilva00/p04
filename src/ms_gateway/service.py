@@ -50,6 +50,7 @@ class GatewayService:
 
     def _run_consumer(self) -> None:
         """Loop blocking do pika - rodando em thread daemon"""
+        logger.info("Iniciando consumer RabbitMQ...")
         try:
             self._consumer = RabbitMQClient()
             self._consumer.setup_multi_consumer(
@@ -78,7 +79,7 @@ class GatewayService:
                 self._promocao_public_key = file.read()
             logger.info("Chave pública do MS Promoção carrega")
 
-        ranking_pub_path = os.path.join("ms_ranking.pem")
+        ranking_pub_path = os.path.join(keys_dir, "ms_ranking.pem")
         if os.path.exists(ranking_pub_path):
             with open(ranking_pub_path, "rb") as file:
                 self._ranking_public_key = file.read()
@@ -130,7 +131,7 @@ class GatewayService:
             raise RuntimeError("Publisher não inicializado!")
 
         payload = PromoPayload(
-            id_promocao=str(uuid.uuid4()),
+            id_promocao=str(uuid.uuid4())[:4],
             nome_produto=request.nome_produto,
             categoria=request.categoria,
             preco=request.preco,
@@ -140,7 +141,9 @@ class GatewayService:
         payload_dict = payload.model_dump()
         payload_dict["loja_email"] = request.loja_email
 
-        envelope = EventEnvelope(routing_key="promocao.recebida", payload=payload_dict)
+        envelope = EventEnvelope(
+            routing_key="promocao.recebida", payload=payload_dict, signature=""
+        )
 
         self._publisher.publish_signed_event(envelope=envelope, private_key_pem=self._private_key)
 

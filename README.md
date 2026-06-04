@@ -41,8 +41,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 **Windows (PowerShell):**
-```
-Não use windows, please
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
 **Verificar instalação:**
@@ -63,7 +63,7 @@ sudo usermod -aG docker $USER
 **Verificar instalação:**
 ```bash
 docker --version
-docker-compose --version
+docker compose version
 ```
 
 ---
@@ -92,12 +92,12 @@ uv run python -m src.core.security
 
 ### 1. Iniciar container
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 2. Verificar status
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 ### 3. Acessar Dashboard do RabbitMQ
@@ -107,14 +107,14 @@ docker-compose ps
 
 ### 4. Parar container (quando terminar)
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ---
 
 ## Executar os Microsserviços
 
-> ** IMPORTANTE:** Execute cada comando em um **terminal separado**
+> **⚠️ IMPORTANTE:** Execute cada comando em um **terminal separado**
 
 ### Terminal 1: MS Gateway API
 ```bash
@@ -122,22 +122,38 @@ uv run uvicorn src.ms_gateway.main:app --reload --port 8000
 ```
 - API disponível em: http://localhost:8000
 - Swagger (testes): http://localhost:8000/docs
-- Dados de promoções em memória
 
 ### Terminal 2: MS Promoção
 ```bash
 uv run python -m src.ms_promocao.main
+```
+
+### Terminal 3: MS Ranking
+```bash
 uv run python -m src.ms_ranking.main
+```
+
+### Terminal 4: MS Notificação
+```bash
 uv run python -m src.ms_notificacao.main
 ```
+
+---
 
 ## Usar a Interface Web
 
 ### 1. Abrir no navegador
+
+**Linux/macOS:**
 ```bash
 open frontend/index.html
 # ou
 firefox frontend/index.html
+```
+
+**Windows (PowerShell):**
+```powershell
+start frontend\index.html
 ```
 
 ### 2. Abas disponíveis
@@ -167,6 +183,7 @@ firefox frontend/index.html
 9. **MS Ranking consome** votos e publica Hot Deals
 10. **Gateway publica evento SSE** → Frontend notifica usuário
 
+---
 
 ## Endpoints Principais
 
@@ -181,3 +198,4 @@ firefox frontend/index.html
 | `GET` | `/clientes/{id}/sse` | WebSocket SSE |
 
 ---
+

@@ -94,9 +94,28 @@ h3 { font-size: var(--font-size-lg); }
 
 /* ── Layout ───────────────────────────────────────────────────── */
 .container {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-lg);
+}
+
+/* ── Layout Consumidor (duas colunas) ────────────────────────── */
+.consumidor-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.consumidor-layout .col-usuario,
+.consumidor-layout .col-promocoes {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .consumidor-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── Glass Card (componente principal) ────────────────────────── */

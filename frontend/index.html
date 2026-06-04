@@ -1,167 +1,162 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sistema de Promoções Distribuído — UTFPR Sistemas Distribuídos">
-  <title>🫧 Promoções WEB 2000</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Promoções Distribuído — UTFPR Sistemas Distribuídos">
+    <title>🫧 Promoções WEB 2000</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- Bolhas decorativas -->
-  <div class="bubble bubble-1"></div>
-  <div class="bubble bubble-2"></div>
-  <div class="bubble bubble-3"></div>
+    <!-- Bolhas decorativas -->
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
 
-  <div class="container">
+    <div class="container">
 
-    <!-- ── Header ──────────────────────────────────────────── -->
-    <header style="text-align: center; margin-bottom: var(--space-xl);">
-      <h1>Promoções</h1>
-    </header>
+        <!-- ── Header ──────────────────────────────────────────── -->
+        <header style="text-align: center; margin-bottom: var(--space-xl);">
+            <h1>Promoções</h1>
+        </header>
 
-    <!-- ── Tabs ────────────────────────────────────────────── -->
-    <nav class="tab-bar">
-      <button class="tab-button active" data-tab="loja">Loja</button>
-      <button class="tab-button" data-tab="consumidor">Consumidor</button>
-    </nav>
+        <!-- ── Tabs ────────────────────────────────────────────── -->
+        <nav class="tab-bar">
+            <button class="tab-button active" data-tab="loja">Loja</button>
+            <button class="tab-button" data-tab="consumidor">Consumidor</button>
+        </nav>
 
-    <!-- ============================================================
+        <!-- ============================================================
          ABA: LOJA
          ============================================================ -->
-    <section id="tab-loja" class="tab-content active">
-      <div class="glass-card">
-        <div class="section-title">
-          <h2>Cadastrar Promoção</h2>
-        </div>
+        <section id="tab-loja" class="tab-content active">
+            <div class="glass-card">
+                <div class="section-title">
+                    <h2>Cadastrar Promoção</h2>
+                </div>
 
-        <form id="form-promocao">
-          <div class="form-group">
-            <label for="input-produto">Nome do Produto</label>
-            <input
-              type="text" id="input-produto" class="form-input"
-              placeholder="Ex: PlayStation 5" required
-            >
-          </div>
+                <form id="form-promocao">
+                    <div class="form-group">
+                        <label for="input-produto">Nome do Produto</label>
+                        <input type="text" id="input-produto" class="form-input" placeholder="Ex: PlayStation 5"
+                            required>
+                    </div>
 
-          <div class="form-group">
-            <label for="input-categoria">Categoria</label>
-            <input
-              type="text" id="input-categoria" class="form-input"
-              placeholder="Ex: eletronico, livro, jogo" required
-            >
-          </div>
+                    <div class="form-group">
+                        <label for="input-categoria">Categoria</label>
+                        <input type="text" id="input-categoria" class="form-input"
+                            placeholder="Ex: eletronico, livro, jogo" required>
+                    </div>
 
-          <div class="form-group">
-            <label for="input-preco">Preço (R$)</label>
-            <input
-              type="number" id="input-preco" class="form-input"
-              placeholder="299.90" step="0.01" min="0.01" required
-            >
-          </div>
+                    <div class="form-group">
+                        <label for="input-preco">Preço (R$)</label>
+                        <input type="number" id="input-preco" class="form-input" placeholder="299.90" step="0.01"
+                            min="0.01" required>
+                    </div>
 
-          <div class="form-group">
-            <label for="input-loja">Nome da Loja</label>
-            <input
-              type="text" id="input-loja" class="form-input"
-              placeholder="Ex: Magazine Luiza" required
-            >
-          </div>
+                    <div class="form-group">
+                        <label for="input-loja">Nome da Loja</label>
+                        <input type="text" id="input-loja" class="form-input" placeholder="Ex: Magazine Luiza" required>
+                    </div>
 
-          <div class="form-group">
-            <label for="input-email">E-mail da Loja</label>
-            <input
-              type="email" id="input-email" class="form-input"
-              placeholder="contato@loja.com" required
-            >
-          </div>
+                    <div class="form-group">
+                        <label for="input-email">E-mail da Loja</label>
+                        <input type="email" id="input-email" class="form-input" value="delivered@resend.dev" readonly
+                            style="opacity: 0.7; cursor: not-allowed;">
+                    </div>
 
-          <button type="submit" class="btn btn-primary" id="btn-enviar">
-            Enviar Promoção
-          </button>
+                    <button type="submit" class="btn btn-primary" id="btn-enviar">
+                        Enviar Promoção
+                    </button>
 
-          <p id="form-status" style="margin-top: var(--space-md); font-size: var(--font-size-sm);"></p>
-        </form>
-      </div>
-    </section>
+                    <p id="form-status" style="margin-top: var(--space-md); font-size: var(--font-size-sm);"></p>
+                </form>
+            </div>
+        </section>
 
-    <!-- ============================================================
+        <!-- ============================================================
          ABA: CONSUMIDOR
          ============================================================ -->
-    <section id="tab-consumidor" class="tab-content">
+        <section id="tab-consumidor" class="tab-content">
+            <div class="consumidor-layout">
 
-      <!-- Identificação + Conexão SSE -->
-      <div class="glass-card" style="margin-bottom: var(--space-lg);">
-        <div class="section-title">
-          <h2>Conexão</h2>
-          <span id="badge-sse" class="badge badge-disconnected">Desconectado</span>
-        </div>
+                <!-- ── Coluna Esquerda: Usuário ────────────────────── -->
+                <div class="col-usuario">
 
-        <div style="display: flex; gap: var(--space-sm); align-items: end;">
-          <div class="form-group" style="flex: 1; margin-bottom: 0;">
-            <label for="input-client-id">Seu nome de usuário</label>
-            <input
-              type="text" id="input-client-id" class="form-input"
-              placeholder="Ex: joao_silva"
-            >
-          </div>
-          <button class="btn btn-primary" id="btn-conectar" type="button">
-            Conectar SSE
-          </button>
-        </div>
-      </div>
+                    <!-- Conexão SSE -->
+                    <div class="glass-card">
+                        <div class="section-title">
+                            <h2>Usuário</h2>
+                            <span id="badge-sse" class="badge badge-disconnected">Desconectado</span>
+                        </div>
 
-      <!-- Interesses (Categorias) -->
-      <div class="glass-card" style="margin-bottom: var(--space-lg);">
-        <div class="section-title">
-          <h2>Categorias de Interesse</h2>
-        </div>
+                        <div style="display: flex; gap: var(--space-sm); align-items: end;">
+                            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                                <label for="input-client-id">Seu nome de usuário</label>
+                                <input type="text" id="input-client-id" class="form-input" placeholder="Ex: joao_silva">
+                            </div>
+                            <button class="btn btn-primary" id="btn-conectar" type="button">
+                                Conectar SSE
+                            </button>
+                        </div>
 
-        <div id="chip-container" class="chip-container">
-          <!-- Chips inseridos via JS -->
-        </div>
+                        <!-- Interesses (oculto até conectar) -->
+                        <div id="panel-interesses" style="display: none; margin-top: var(--space-lg);">
+                            <div style="display: flex; gap: var(--space-sm); align-items: end;">
+                                <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                                    <label for="input-interesse">Categorias de Interesse</label>
+                                    <input type="text" id="input-interesse" class="form-input"
+                                        placeholder="Digite uma categoria..." style="flex: 1;">
+                                </div>
+                                <button class="btn btn-success" id="btn-add-interesse" type="button">
+                                    + Adicionar
+                                </button>
+                            </div>
 
-        <div style="display: flex; gap: var(--space-sm);">
-          <input
-            type="text" id="input-interesse" class="form-input"
-            placeholder="Digite uma categoria..."
-            style="flex: 1;"
-          >
-          <button class="btn btn-success btn-sm" id="btn-add-interesse" type="button">
-            + Adicionar
-          </button>
-        </div>
-      </div>
+                            <div id="chip-container" class="chip-container" style="margin-top: var(--space-md);">
+                                <!-- Chips inseridos via JS -->
+                            </div>
+                        </div>
 
-      <!-- Promoções Ativas -->
-      <div class="glass-card" style="margin-bottom: var(--space-lg);">
-        <div class="section-title">
-          <h2>Promoções Ativas</h2>
-          <button class="btn btn-sm btn-primary" id="btn-refresh" type="button">
-            Atualizar
-          </button>
-        </div>
+                    </div>
 
-        <div id="promo-list">
-          <div class="empty-state">Nenhuma promoção disponível ainda.</div>
-        </div>
-      </div>
+                    <!-- Notificações (oculto até conectar) -->
+                    <div id="panel-notificacoes" class="glass-card" style="display: none; margin-top: var(--space-lg);">
+                        <div class="section-title">
+                            <h2>Notificações em Tempo Real</h2>
+                        </div>
 
-      <!-- Notificações em Tempo Real -->
-      <div class="glass-card">
-        <div class="section-title">
-          <h2>Notificações em Tempo Real</h2>
-        </div>
+                        <div id="notification-panel" class="notification-panel">
+                            <div class="empty-state">Aguardando notificações...</div>
+                        </div>
+                    </div>
 
-        <div id="notification-panel" class="notification-panel">
-          <div class="empty-state">Conecte-se ao SSE para receber notificações.</div>
-        </div>
-      </div>
+                </div>
 
-    </section>
-  </div>
+                <!-- ── Coluna Direita: Promoções Ativas ────────────── -->
+                <div class="col-promocoes">
+                    <div class="glass-card">
+                        <div class="section-title">
+                            <h2>Promoções Ativas</h2>
+                            <button class="btn btn-sm btn-primary" id="btn-refresh" type="button">
+                                Atualizar
+                            </button>
+                        </div>
 
-  <script src="app.js"></script>
+                        <div id="promo-list">
+                            <div class="empty-state">Nenhuma promoção disponível ainda.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
 </body>
+
 </html>

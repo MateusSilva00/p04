@@ -11,7 +11,7 @@ const $$ = (sel) => document.querySelectorAll(sel);
 
 const DOM = {
   // Tabs
-  tabButtons: $$(".tab-button"),
+  tabButtons: $$("[data-tab]"),
 
   // Loja
   formPromocao: $("#form-promocao"),
@@ -21,6 +21,10 @@ const DOM = {
   inputClientId: $("#input-client-id"),
   btnConectar: $("#btn-conectar"),
   badgeSSE: $("#badge-sse"),
+
+  // Consumidor — Painéis condicionais
+  panelInteresses: $("#panel-interesses"),
+  panelNotificacoes: $("#panel-notificacoes"),
 
   // Consumidor — Interesses
   inputInteresse: $("#input-interesse"),
@@ -151,6 +155,7 @@ function connectSSE() {
   sseConnection.onopen = () => {
     setBadge("Conectado", true);
     DOM.btnConectar.textContent = "Reconectar";
+    showPostConnectPanels();
     pushNotification("Sistema", `Conectado como "${clientId}"`, "promo");
   };
 
@@ -181,6 +186,13 @@ function setBadge(text, connected) {
   DOM.badgeSSE.className = connected
     ? "badge badge-connected"
     : "badge badge-disconnected";
+}
+
+function showPostConnectPanels() {
+  DOM.panelInteresses.style.display = "block";
+  DOM.panelNotificacoes.style.display = "block";
+  DOM.panelInteresses.style.animation = "aero-fade-in 0.35s ease";
+  DOM.panelNotificacoes.style.animation = "aero-fade-in 0.35s ease";
 }
 
 // ================================================================

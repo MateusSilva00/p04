@@ -10,13 +10,17 @@ from rich.text import Text
 
 from src.core.models import EventEnvelope
 from src.core.rabbitmq import RabbitMQClient
+from src.ms_notificacao.email_service import EmailService
 from src.utils.utils import cls
 
 console = Console()
 
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "re_2RvaKFPS_EYXDz3pPhoD27VcAYUuwfZqT")
+
 known_promotions: dict = {}
 event_log: list = []
 render_lock = threading.Lock()
+email_service: EmailService | None = None
 
 
 def render():
@@ -61,11 +65,21 @@ def render():
 
 
 def init_consumers(public_key_promotion, public_key_ranking):
+    global email_service
     try:
         rabbitmq = RabbitMQClient()
     except Exception as e:
         console.print(Panel(f"[red]Erro RabbitMQ:[/red] {e}", style="red"))
         return
+
+    # Inicializa o serviço de e-mail
+    try:
+        email_service = EmailService(api_key=RESEND_API_KEY)
+        event_log.append("  [green]📧 Serviço de e-mail (Resend) inicializado.[/green]")
+    except Exception as e:
+        event_log.append(f"  [red]⚠ Falha ao inicializar e-mail:[/red] {e}")
+        email_service = None
+    render()
 
     def process_published(envelope: EventEnvelope):
         payload = envelope.payload
@@ -83,6 +97,15 @@ def init_consumers(public_key_promotion, public_key_ranking):
         event_log.append(
             f"  [blue]📢[/blue] [white]{nome}[/white] → [cyan]promocao.{category}[/cyan]"
         )
+
+        # Envia e-mail de "promoção publicada" para a loja
+        if email_service:
+            email_service.enviar_promocao_publicada(payload)
+            loja_email = payload.get("loja_email", "?")
+            event_log.append(
+                f"  [green]📧[/green] E-mail enviado para [white]{loja_email}[/white]"
+            )
+
         render()
 
     def processar_destaque(envelope: EventEnvelope):
@@ -109,6 +132,15 @@ def init_consumers(public_key_promotion, public_key_ranking):
                 f"  [yellow]🔥 HOT DEAL:[/yellow] [white]{nome}[/white] (score {score}) "
                 f"→ [cyan]promocao.{category}[/cyan]"
             )
+
+            # Envia e-mail de "hot deal" para a loja
+            if email_service:
+                payload_destaque["score"] = score
+                email_service.enviar_hot_deal(payload_destaque)
+                loja_email = dados_originais.get("loja_email", "?")
+                event_log.append(
+                    f"  [green]📧[/green] E-mail Hot Deal enviado para [white]{loja_email}[/white]"
+                )
         else:
             event_log.append(
                 "  [yellow]⚠[/yellow] Hot Deal para promoção desconhecida: "

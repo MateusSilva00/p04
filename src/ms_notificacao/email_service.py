@@ -1,7 +1,7 @@
 import resend
 from loguru import logger
 
-DESTINATARIO_FIXO = "mur1lol.mbc@gmail.com"
+DESTINATARIO_FIXO = "delivered@resend.dev"
 
 
 class EmailService:

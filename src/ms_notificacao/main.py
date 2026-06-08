@@ -1,6 +1,7 @@
 import os
 import threading
 
+from dotenv import load_dotenv
 from rich import box
 from rich.console import Console
 from rich.panel import Panel
@@ -13,9 +14,11 @@ from src.core.rabbitmq import RabbitMQClient
 from src.ms_notificacao.email_service import EmailService
 from src.utils.utils import cls
 
+load_dotenv()
+
 console = Console()
 
-RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "re_2RvaKFPS_EYXDz3pPhoD27VcAYUuwfZqT")
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 
 known_promotions: dict = {}
 event_log: list = []

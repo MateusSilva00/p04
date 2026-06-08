@@ -1,3 +1,13 @@
 *__pycache__/
 .agents/
 keys/
+
+# Variáveis de ambiente (contém segredos)
+.env
+
+# Virtual environment
+.venv/
+
+# IDE
+.vscode/
+.idea/

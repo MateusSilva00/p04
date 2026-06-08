@@ -76,12 +76,21 @@ git clone https://github.com/MateusSilva00/p04.git
 cd p04
 ```
 
-### 2. Instalar dependências Python
+### 2. Configurar variáveis de ambiente
+```bash
+cp .env.example .env
+```
+Edite o `.env` e preencha a chave da API do [Resend](https://resend.com):
+```
+RESEND_API_KEY=sua_chave_aqui
+```
+
+### 3. Instalar dependências Python
 ```bash
 uv sync
 ```
 
-### 3. Gerar chaves criptográficas
+### 4. Gerar chaves criptográficas
 ```bash
 uv run python -m src.core.security
 ```
@@ -95,17 +104,12 @@ uv run python -m src.core.security
 docker compose up -d
 ```
 
-### 2. Verificar status
-```bash
-docker compose ps
-```
-
-### 3. Acessar Dashboard do RabbitMQ
+### 2. Acessar Dashboard do RabbitMQ
 - URL: http://localhost:15672
 - Usuário: `guest`
 - Senha: `guest`
 
-### 4. Parar container (quando terminar)
+### 3. Parar container (quando terminar)
 ```bash
 docker compose down
 ```
@@ -194,8 +198,10 @@ start frontend\index.html
 | `GET` | `/promocoes` | Listar promoções aprovadas |
 | `POST` | `/promocoes` | Cadastrar nova promoção |
 | `POST` | `/promocoes/{id}/votos` | Registrar voto |
+| `POST` | `/clientes/{id}/interesses` | Registrar interesse em categoria |
+| `DELETE` | `/clientes/{id}/interesses/{cat}` | Remover interesse |
+| `GET` | `/clientes/{id}/sse` | Stream SSE de notificações |
 | `GET` | `/docs` | Swagger interativo |
-| `GET` | `/clientes/{id}/sse` | WebSocket SSE |
 
 ---
 

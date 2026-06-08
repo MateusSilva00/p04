@@ -1,52 +1,48 @@
-// ================================================================
-// app.js — REST Client + SSE Consumer
-// ================================================================
+
 
 const API_BASE = "http://localhost:8000";
 
-// ── Atalhos DOM ──────────────────────────────────────────────────
+
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
 const DOM = {
-  // Tabs
+
   tabButtons: $$("[data-tab]"),
 
-  // Loja
+
   formPromocao: $("#form-promocao"),
   formStatus: $("#form-status"),
 
-  // Consumidor — Conexão
+
   inputClientId: $("#input-client-id"),
   btnConectar: $("#btn-conectar"),
   badgeSSE: $("#badge-sse"),
 
-  // Consumidor — Painéis condicionais
+
   panelInteresses: $("#panel-interesses"),
   panelNotificacoes: $("#panel-notificacoes"),
 
-  // Consumidor — Interesses
+
   inputInteresse: $("#input-interesse"),
   btnAddInteresse: $("#btn-add-interesse"),
   chipContainer: $("#chip-container"),
 
-  // Consumidor — Promoções e Notificações
+
   btnRefresh: $("#btn-refresh"),
   promoList: $("#promo-list"),
   notificationPanel: $("#notification-panel"),
 };
 
-// ── Estado ────────────────────────────────────────────────────────
+
 
 let sseConnection = null;
 let clientId = null;
 const interests = new Set();
 let firstNotification = true;
 
-// ================================================================
-// TABS
-// ================================================================
+
 
 DOM.tabButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -58,9 +54,7 @@ DOM.tabButtons.forEach((btn) => {
   });
 });
 
-// ================================================================
-// API CLIENT
-// ================================================================
+
 
 async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -101,9 +95,7 @@ const api = {
     }),
 };
 
-// ================================================================
-// LOJA — Cadastro de Promoção
-// ================================================================
+
 
 DOM.formPromocao.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -136,9 +128,7 @@ function setFormStatus(text, color) {
   DOM.formStatus.style.color = color;
 }
 
-// ================================================================
-// CONSUMIDOR — Conexão SSE
-// ================================================================
+
 
 DOM.btnConectar.addEventListener("click", connectSSE);
 
@@ -195,9 +185,7 @@ function showPostConnectPanels() {
   DOM.panelNotificacoes.style.animation = "aero-fade-in 0.35s ease";
 }
 
-// ================================================================
-// CONSUMIDOR — Interesses (Categorias)
-// ================================================================
+
 
 DOM.btnAddInteresse.addEventListener("click", addInterest);
 DOM.inputInteresse.addEventListener("keydown", (e) => {
@@ -248,15 +236,13 @@ function renderChips() {
     .join("");
 }
 
-// Event delegation para remover chips
+
 DOM.chipContainer.addEventListener("click", (e) => {
   const btn = e.target.closest(".chip-remove");
   if (btn) removeInterest(btn.dataset.category);
 });
 
-// ================================================================
-// CONSUMIDOR — Promoções Ativas
-// ================================================================
+
 
 DOM.btnRefresh.addEventListener("click", refreshPromocoes);
 
@@ -291,7 +277,7 @@ async function refreshPromocoes() {
   }
 }
 
-// Event delegation para votos
+
 DOM.promoList.addEventListener("click", async (e) => {
   const btn = e.target.closest("[data-vote-id]");
   if (!btn) return;
@@ -308,9 +294,7 @@ DOM.promoList.addEventListener("click", async (e) => {
   }
 });
 
-// ================================================================
-// NOTIFICAÇÕES
-// ================================================================
+
 
 function pushNotification(title, message, type) {
   if (firstNotification) {
@@ -324,7 +308,7 @@ function pushNotification(title, message, type) {
 
   DOM.notificationPanel.prepend(item);
 
-  // Limita a 50 itens
+
   while (DOM.notificationPanel.children.length > 50) {
     DOM.notificationPanel.lastChild.remove();
   }

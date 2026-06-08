@@ -37,7 +37,7 @@ from src.core.models import EventEnvelope, PromoPayload, VotoPayload
 from src.core.rabbitmq import RabbitMQClient
 from src.core.security import CryptoService
 
-# ─── Dados sintéticos para geração aleatória ────────────────────────────────
+
 
 PRODUTOS = [
     'TV 4K OLED 55"',
@@ -139,7 +139,7 @@ def main():
     delay = args.delay
     wait_between = args.wait
 
-    # ── Header ──────────────────────────────────────────────────────────────
+
     title = Text()
     title.append("⚡", style="bold white")
     title.append("  |  ", style="dim white")
@@ -148,7 +148,7 @@ def main():
     console.print(Panel(title, style="red", padding=(0, 2)))
     console.print()
 
-    # ── Carregar chave privada do Gateway ────────────────────────────────────
+
     try:
         gateway_private_key, _ = CryptoService.load_or_generate_keys("ms_gateway")
     except Exception as e:
@@ -156,7 +156,7 @@ def main():
         console.print("[yellow]Dica: rode o MS Gateway pelo menos uma vez antes.[/yellow]")
         sys.exit(1)
 
-    # ── Conectar ao RabbitMQ ─────────────────────────────────────────────────
+
     try:
         rabbitmq = RabbitMQClient()
     except Exception as e:
@@ -166,7 +166,7 @@ def main():
 
     console.print("[green]✔[/green] Conectado ao RabbitMQ\n")
 
-    # ── Fase 1: Publicar promoções ──────────────────────────────────────────
+
     ids_publicados: list[str] = []
     nomes_publicados: dict[str, str] = {}  # id -> nome_produto
 
@@ -197,7 +197,7 @@ def main():
 
     console.print(f"[green]✔ {num_promo} promoções publicadas com sucesso![/green]\n")
 
-    # ── Espera: dar tempo ao MS Promoção validar ─────────────────────────────
+
     if num_votos > 0 and ids_publicados and wait_between > 0:
         console.print(
             f"[dim]⏳ Aguardando {wait_between:.0f}s para o MS Promoção validar as "
@@ -216,7 +216,7 @@ def main():
                 progress.advance(wait_task)
         console.print()
 
-    # ── Fase 2: Publicar votos aleatórios ────────────────────────────────────
+
     if num_votos > 0 and ids_publicados:
         votos_positivos = 0
         votos_negativos = 0
@@ -256,7 +256,7 @@ def main():
             f"  [dim]👍 Positivos: {votos_positivos}  |  👎 Negativos: {votos_negativos}[/dim]\n"
         )
 
-    # ── Resumo final ─────────────────────────────────────────────────────────
+
     rabbitmq.close()
 
     table = Table(

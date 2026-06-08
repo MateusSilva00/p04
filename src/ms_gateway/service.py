@@ -125,7 +125,6 @@ class GatewayService:
             self._consumer.close()
         logger.info("GatewayService encerrado")
 
-    # ── Publicação (chamado pelos endpoints REST) ───────────────
     def publish_promocao(self, request: PromoCreateRequest) -> PromoPayload:
         if not self._publisher:
             raise RuntimeError("Publisher não inicializado!")

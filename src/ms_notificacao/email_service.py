@@ -1,7 +1,6 @@
 import resend
 from loguru import logger
 
-# Em modo de teste (onboarding@resend.dev), emails só chegam neste endereço
 DESTINATARIO_FIXO = "mur1lol.mbc@gmail.com"
 
 

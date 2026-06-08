@@ -1,14 +1,11 @@
-/* ================================================================
-   FRUTIGER AERO — Design System
-   Glassmorphism, gradientes sky-blue, glossy buttons, bolhas
-   ================================================================ */
 
-/* ── Google Fonts ─────────────────────────────────────────────── */
+
+
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-/* ── Variáveis ────────────────────────────────────────────────── */
+
 :root {
-  /* Paleta Frutiger Aero */
+
   --sky-100: #e8f4fd;
   --sky-200: #b8ddf5;
   --sky-300: #7ec4ed;
@@ -32,7 +29,7 @@
   --text-secondary: #5a6a7a;
   --text-light: #ffffff;
 
-  /* Tipografia */
+
   --font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -41,7 +38,7 @@
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
 
-  /* Espaçamento */
+
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -49,14 +46,14 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
 
-  /* Bordas */
+
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-full: 9999px;
 }
 
-/* ── Reset & Base ─────────────────────────────────────────────── */
+
 *,
 *::before,
 *::after {
@@ -71,7 +68,7 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
 
-  /* Gradiente céu Frutiger Aero */
+
   background: linear-gradient(
     180deg,
     #a1d4f7 0%,
@@ -82,7 +79,7 @@ body {
   background-attachment: fixed;
 }
 
-/* ── Tipografia ───────────────────────────────────────────────── */
+
 h1, h2, h3 {
   font-weight: 800;
   color: var(--text-primary);
@@ -92,14 +89,14 @@ h1 { font-size: var(--font-size-2xl); }
 h2 { font-size: var(--font-size-xl); }
 h3 { font-size: var(--font-size-lg); }
 
-/* ── Layout ───────────────────────────────────────────────────── */
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-lg);
 }
 
-/* ── Layout Consumidor (duas colunas) ────────────────────────── */
+
 .consumidor-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -118,7 +115,7 @@ h3 { font-size: var(--font-size-lg); }
   }
 }
 
-/* ── Glass Card (componente principal) ────────────────────────── */
+
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
@@ -128,7 +125,7 @@ h3 { font-size: var(--font-size-lg); }
   box-shadow: var(--glass-shadow);
   padding: var(--space-xl);
 
-  /* Brilho glossy no topo */
+
   position: relative;
   overflow: hidden;
 }
@@ -149,7 +146,7 @@ h3 { font-size: var(--font-size-lg); }
   border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
-/* ── Tabs (Loja / Consumidor) ─────────────────────────────────── */
+
 .tab-bar {
   display: flex;
   gap: var(--space-xs);
@@ -192,7 +189,7 @@ h3 { font-size: var(--font-size-lg); }
   animation: aero-fade-in 0.3s ease;
 }
 
-/* ── Formulário ───────────────────────────────────────────────── */
+
 .form-group {
   margin-bottom: var(--space-lg);
 }
@@ -226,7 +223,7 @@ h3 { font-size: var(--font-size-lg); }
   box-shadow: 0 0 0 3px rgba(10, 132, 208, 0.15);
 }
 
-/* ── Botões Glossy ────────────────────────────────────────────── */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -243,7 +240,7 @@ h3 { font-size: var(--font-size-lg); }
   overflow: hidden;
 }
 
-/* Reflexo glossy */
+
 .btn::after {
   content: '';
   position: absolute;
@@ -299,7 +296,7 @@ h3 { font-size: var(--font-size-lg); }
   font-size: var(--font-size-sm);
 }
 
-/* ── Promoção Card ────────────────────────────────────────────── */
+
 .promo-card {
   background: rgba(255, 255, 255, 0.45);
   border: 1px solid var(--glass-border);
@@ -339,7 +336,7 @@ h3 { font-size: var(--font-size-lg); }
   gap: var(--space-xs);
 }
 
-/* ── Chips (categorias de interesse) ──────────────────────────── */
+
 .chip-container {
   display: flex;
   flex-wrap: wrap;
@@ -374,7 +371,7 @@ h3 { font-size: var(--font-size-lg); }
   opacity: 1;
 }
 
-/* ── Painel de Notificações SSE ───────────────────────────────── */
+
 .notification-panel {
   max-height: 320px;
   overflow-y: auto;
@@ -399,7 +396,7 @@ h3 { font-size: var(--font-size-lg); }
   border-left: 3px solid var(--orange-400);
 }
 
-/* ── Badge de status ──────────────────────────────────────────── */
+
 .badge {
   display: inline-block;
   padding: 2px var(--space-sm);
@@ -419,7 +416,7 @@ h3 { font-size: var(--font-size-lg); }
   color: white;
 }
 
-/* ── Seções ────────────────────────────────────────────────────── */
+
 .section-title {
   display: flex;
   align-items: center;
@@ -429,7 +426,7 @@ h3 { font-size: var(--font-size-lg); }
   border-bottom: 2px solid var(--sky-200);
 }
 
-/* ── Mensagem vazia ───────────────────────────────────────────── */
+
 .empty-state {
   text-align: center;
   padding: var(--space-2xl);
@@ -437,7 +434,7 @@ h3 { font-size: var(--font-size-lg); }
   font-style: italic;
 }
 
-/* ── Animações ────────────────────────────────────────────────── */
+
 @keyframes aero-fade-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -448,7 +445,7 @@ h3 { font-size: var(--font-size-lg); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Bolha decorativa */
+
 .bubble {
   position: fixed;
   border-radius: 50%;
@@ -465,7 +462,7 @@ h3 { font-size: var(--font-size-lg); }
 .bubble-2 { width: 120px; height: 120px; bottom: 15%; left: -30px; }
 .bubble-3 { width: 80px;  height: 80px;  top: 50%; right: 10%; }
 
-/* ── Scrollbar Aero ───────────────────────────────────────────── */
+
 ::-webkit-scrollbar {
   width: 8px;
 }

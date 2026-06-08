@@ -11,27 +11,25 @@
 
 <body>
 
-    <!-- Bolhas decorativas -->
+
     <div class="bubble bubble-1"></div>
     <div class="bubble bubble-2"></div>
     <div class="bubble bubble-3"></div>
 
     <div class="container">
 
-        <!-- ── Header ──────────────────────────────────────────── -->
+        <!-- Header -->
         <header style="text-align: center; margin-bottom: var(--space-xl);">
             <h1>Promoções</h1>
         </header>
 
-        <!-- ── Tabs ────────────────────────────────────────────── -->
+        <!-- Tabs -->
         <nav class="tab-bar">
             <button class="tab-button active" data-tab="loja">Loja</button>
             <button class="tab-button" data-tab="consumidor">Consumidor</button>
         </nav>
 
-        <!-- ============================================================
-         ABA: LOJA
-         ============================================================ -->
+        <!-- ABA: LOJA -->
         <section id="tab-loja" class="tab-content active">
             <div class="glass-card">
                 <div class="section-title">
@@ -77,16 +75,14 @@
             </div>
         </section>
 
-        <!-- ============================================================
-         ABA: CONSUMIDOR
-         ============================================================ -->
+        <!-- ABA: CONSUMIDOR -->
         <section id="tab-consumidor" class="tab-content">
             <div class="consumidor-layout">
 
-                <!-- ── Coluna Esquerda: Usuário ────────────────────── -->
+
                 <div class="col-usuario">
 
-                    <!-- Conexão SSE -->
+
                     <div class="glass-card">
                         <div class="section-title">
                             <h2>Usuário</h2>
@@ -103,7 +99,7 @@
                             </button>
                         </div>
 
-                        <!-- Interesses (oculto até conectar) -->
+                        <!-- Interesses -->
                         <div id="panel-interesses" style="display: none; margin-top: var(--space-lg);">
                             <div style="display: flex; gap: var(--space-sm); align-items: end;">
                                 <div class="form-group" style="flex: 1; margin-bottom: 0;">
@@ -117,13 +113,13 @@
                             </div>
 
                             <div id="chip-container" class="chip-container" style="margin-top: var(--space-md);">
-                                <!-- Chips inseridos via JS -->
+
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Notificações (oculto até conectar) -->
+
                     <div id="panel-notificacoes" class="glass-card" style="display: none; margin-top: var(--space-lg);">
                         <div class="section-title">
                             <h2>Notificações em Tempo Real</h2>
@@ -136,7 +132,7 @@
 
                 </div>
 
-                <!-- ── Coluna Direita: Promoções Ativas ────────────── -->
+
                 <div class="col-promocoes">
                     <div class="glass-card">
                         <div class="section-title">

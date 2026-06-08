@@ -11,7 +11,7 @@ from src.utils.utils import cls
 
 console = Console()
 
-notification_history: list = []  # Histórico de notificações recebidas
+notification_history: list = []
 
 
 def render(nome_cliente: str, interesses: list[str]):
@@ -105,7 +105,6 @@ def main():
         payload = envelope.payload
         categoria_rk = envelope.routing_key
 
-        # Payload simples direto do MS Ranking (só tem id_promocao e score)
         if "score" in payload and "nome_produto" not in payload:
             notification_history.append(
                 {
@@ -116,7 +115,6 @@ def main():
                     "canal": categoria_rk,
                 }
             )
-        # Payload completo de Hot Deal do MS Notificação
         elif payload.get("aviso") == "hot deal":
             notification_history.append(
                 {
@@ -127,7 +125,6 @@ def main():
                     "canal": categoria_rk,
                 }
             )
-        # Promoção nova normal
         else:
             notification_history.append(
                 {

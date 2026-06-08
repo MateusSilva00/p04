@@ -61,5 +61,4 @@ class ConnectionManager:
         return category in self._interests.get(client_id, set())
 
 
-# Instância singleton — importada pelos endpoints do FastAPI
 connection_manager = ConnectionManager()

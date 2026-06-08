@@ -23,7 +23,6 @@ def render():
     """Limpa o terminal e re-renderiza o dashboard completo."""
     cls()
 
-    # Cabeçalho
     title = Text()
     title.append("🏆", style="bold white")
     title.append("  |  ", style="dim white")
@@ -31,7 +30,6 @@ def render():
     title.append(f"  |  Limite Hot Deal: {LIMIT_HOT_DEAL} votos", style="dim yellow")
     console.print(Panel(title, style="yellow", padding=(0, 2)))
 
-    # Placar atual
     if local_score:
         table = Table(
             box=box.ROUNDED,
@@ -74,7 +72,6 @@ def render():
     else:
         console.print("[dim]Nenhum voto recebido ainda.[/dim]\n")
 
-    # Log dos últimos votos
     if vote_log:
         console.print(Rule("[dim]Log de Votos[/dim]", style="dim yellow"))
         for entrada in vote_log[-10:]:
@@ -116,7 +113,6 @@ def main():
         nome = payload.get("nome_produto", "?")
 
         entry = local_score.get(id_promotion, {"nome": nome, "score": 0})
-        # Atualiza o nome caso ainda não tenha sido preenchido
         if entry["nome"] == "?":
             entry["nome"] = nome
 

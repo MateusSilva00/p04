@@ -37,7 +37,6 @@ def render():
         title.append("MS Notificação", style="bold blue")
         console.print(Panel(title, style="blue", padding=(0, 2)))
 
-        # Tabela de promoções conhecidas
         if known_promotions:
             table = Table(
                 box=box.ROUNDED,
@@ -60,7 +59,6 @@ def render():
         else:
             console.print("[dim]Aguardando promoções publicadas...[/dim]\n")
 
-        # Log de roteamentos
         if event_log:
             console.print(Rule("[dim]Log de Roteamentos[/dim]", style="dim blue"))
             for entrada in event_log[-10:]:
@@ -75,7 +73,6 @@ def init_consumers(public_key_promotion, public_key_ranking):
         console.print(Panel(f"[red]Erro RabbitMQ:[/red] {e}", style="red"))
         return
 
-    # Inicializa o serviço de e-mail
     try:
         email_service = EmailService(api_key=RESEND_API_KEY)
         event_log.append("  [green]📧 Serviço de e-mail (Resend) inicializado.[/green]")
@@ -101,7 +98,6 @@ def init_consumers(public_key_promotion, public_key_ranking):
             f"  [blue]📢[/blue] [white]{nome}[/white] → [cyan]promocao.{category}[/cyan]"
         )
 
-        # Envia e-mail de "promoção publicada" para a loja
         if email_service:
             email_service.enviar_promocao_publicada(payload)
             loja_email = payload.get("loja_email", "?")
@@ -136,7 +132,6 @@ def init_consumers(public_key_promotion, public_key_ranking):
                 f"→ [cyan]promocao.{category}[/cyan]"
             )
 
-            # Envia e-mail de "hot deal" para a loja
             if email_service:
                 payload_destaque["score"] = score
                 email_service.enviar_hot_deal(payload_destaque)

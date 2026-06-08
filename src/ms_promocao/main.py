@@ -15,7 +15,7 @@ from src.utils.utils import cls
 
 console = Console()
 
-processed: list = []  # Histórico de promoções processadas
+processed: list = []
 
 
 def render():

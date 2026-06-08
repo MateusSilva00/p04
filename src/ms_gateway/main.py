@@ -19,7 +19,6 @@ from src.ms_gateway.manager import connection_manager
 from src.ms_gateway.service import gateway_service
 
 
-# ── Lifespan ───────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
     loop = asyncio.get_running_loop()
@@ -87,7 +86,6 @@ async def registrar_voto(id_promocao: str, request: VotoRequest) -> dict[str, st
     return {"status": "voto registrado"}
 
 
-# ── Interesses (Categorias) ───────────────────────────────────
 @app.post(
     "/clientes/{client_id}/interesses",
     status_code=status.HTTP_201_CREATED,

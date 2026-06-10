@@ -79,7 +79,7 @@ class GatewayService:
                 self._promocao_public_key = file.read()
             logger.info("Chave pública do MS Promoção carrega")
 
-        ranking_pub_path = os.path.join(keys_dir, "ms_ranking.pem")
+        ranking_pub_path = os.path.join(keys_dir, "ms_ranking_public.pem")
         if os.path.exists(ranking_pub_path):
             with open(ranking_pub_path, "rb") as file:
                 self._ranking_public_key = file.read()
@@ -153,6 +153,12 @@ class GatewayService:
     def publish_voto(self, voto: VotoPayload) -> None:
         if not self._publisher:
             raise RuntimeError("Publisher não inicializado")
+
+        if voto.id_promocao in self._approved:
+            if voto.voto > 0:
+                self._approved[voto.id_promocao].votos_positivos += 1
+            else:
+                self._approved[voto.id_promocao].votos_negativos += 1
 
         envelope = EventEnvelope(routing_key="promocao.voto", payload=voto.model_dump())
 

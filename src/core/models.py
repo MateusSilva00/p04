@@ -33,6 +33,8 @@ class PromoPayload(BaseModel):
     categoria: str
     preco: float
     loja: str
+    votos_positivos: int = 0
+    votos_negativos: int = 0
 
 
 class VotoPayload(BaseModel):
